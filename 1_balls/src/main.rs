@@ -2,7 +2,6 @@ use nannou::{color, prelude::*};
 
 const RADIUS: i32 = 20;
 const DIAMETER: i32 = RADIUS * 2;
-const X_STEP: i32 = 1;
 const COLUMNS: i32 = 100;
 
 fn main() {
@@ -16,12 +15,6 @@ fn main() {
 struct Ball {
     pos: (i32, i32),
     initial_transparency: f32,
-}
-
-impl Ball {
-    fn set_x(&mut self, x: i32) {
-        self.pos.0 = x;
-    }
 }
 
 struct Model {
