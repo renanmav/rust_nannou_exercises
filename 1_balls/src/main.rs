@@ -4,6 +4,7 @@ const RADIUS: i32 = 20;
 const DIAMETER: i32 = RADIUS * 2;
 const COLUMNS: i32 = 100;
 const VELOCITY: i32 = 2;
+const X_STEP: i32 = 1;
 
 fn main() {
     nannou::app(model)
@@ -16,6 +17,12 @@ fn main() {
 struct Ball {
     pos: (i32, i32),
     initial_transparency: f32,
+}
+
+impl Ball {
+    fn set_x(&mut self, x: i32) {
+        self.pos.0 = x;
+    }
 }
 
 struct Model {
@@ -47,7 +54,11 @@ fn model(app: &App) -> Model {
     Model { balls }
 }
 
-fn update(_app: &App, _model: &mut Model, _update: Update) {}
+fn update(_app: &App, model: &mut Model, _update: Update) {
+    for ball in model.balls.iter_mut() {
+        ball.set_x(ball.pos.0 - X_STEP);
+    }
+}
 
 fn view(app: &App, model: &Model, frame: Frame) {
     let draw = app.draw();
