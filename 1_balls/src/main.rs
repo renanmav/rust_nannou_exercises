@@ -1,4 +1,4 @@
-use log::{LevelFilter, warn};
+use log::LevelFilter;
 use nannou::{color, prelude::*};
 
 mod logger;
