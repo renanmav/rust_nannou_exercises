@@ -1,12 +1,20 @@
+use log::{LevelFilter, warn};
 use nannou::{color, prelude::*};
 
+mod logger;
+
+const DEBUG_LOGGING: bool = false;
 const RADIUS: i32 = 20;
 const DIAMETER: i32 = RADIUS * 2;
 const COLUMNS: i32 = 100;
 const VELOCITY: i32 = 2;
 const X_STEP: i32 = 1;
 
+static LOGGER: logger::SimpleLogger = logger::SimpleLogger { enabled: DEBUG_LOGGING };
+
 fn main() {
+    let _ = log::set_logger(&LOGGER).map(|()| log::set_max_level(LevelFilter::Warn));
+
     nannou::app(model)
         .size(500, 500)
         .update(update)
