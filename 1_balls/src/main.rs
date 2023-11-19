@@ -3,10 +3,11 @@ use nannou::{color, prelude::*};
 const RADIUS: i32 = 20;
 const DIAMETER: i32 = RADIUS * 2;
 const COLUMNS: i32 = 100;
+const VELOCITY: i32 = 2;
 
 fn main() {
     nannou::app(model)
-        .size(600, 1000)
+        .size(500, 500)
         .update(update)
         .simple_window(view)
         .run();
@@ -54,7 +55,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     draw.background().color(BLACK);
 
     for ball in model.balls.iter() {
-        let sine = (app.time + ball.initial_transparency * 2.0 * PI).sin();
+        let sine = (app.time * VELOCITY as f32 + ball.initial_transparency * 2.0 * PI).sin();
         let transparency = map_range(sine, -1.0, 1.0, 0.0, 1.0);
 
         let stroke_color = color::rgba(1.0, 1.0, 1.0, transparency);
@@ -66,6 +67,13 @@ fn view(app: &App, model: &Model, frame: Frame) {
             .x_y(ball.pos.0 as f32, ball.pos.1 as f32)
             .w_h(DIAMETER as f32, DIAMETER as f32);
     }
+
+    draw.ellipse()
+        .stroke_weight(1.0)
+        .stroke(WHITE)
+        .color(BLACK)
+        .x_y(0.0, 0.0)
+        .w_h(250.0, 250.0);
 
     draw.to_frame(app, &frame).unwrap();
 }
